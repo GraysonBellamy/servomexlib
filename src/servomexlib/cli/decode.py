@@ -53,8 +53,12 @@ def _run(args: argparse.Namespace) -> int:
 
 
 def decode_capture(data: bytes) -> str:
-    """Decode one or more ``CR LF``-separated frames into a text report."""
-    frames = [frame for frame in data.split(b"\r\n") if frame.strip(b" ")]
+    """Decode one or more ``CR LF``-separated frames into a text report.
+
+    Tolerates a bare ``LF`` as well as ``CR LF`` (a capture may have lost its
+    ``CR`` to a text-mode transform); the parser strips a trailing ``CR`` anyway.
+    """
+    frames = [frame.rstrip(b"\r") for frame in data.split(b"\n") if frame.strip(b" \r")]
     if not frames:
         return "no frames found\n"
     multi = len(frames) > 1

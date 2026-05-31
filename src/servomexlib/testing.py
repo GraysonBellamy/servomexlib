@@ -51,8 +51,14 @@ __all__ = [
 
 
 def split_continuous_frames(capture: bytes) -> list[bytes]:
-    """Split a raw continuous capture into individual frame payloads (no CRLF)."""
-    return [frame for frame in capture.split(b"\r\n") if frame.strip(b" ")]
+    """Split a raw continuous capture into individual frame payloads (no CRLF).
+
+    The on-wire terminator is ``CR LF`` (design §3.1), but a capture that has been
+    through a text-mode transform keeps only the ``LF``. We split on ``LF`` and
+    drop a trailing ``CR`` so both framings yield the same payloads — matching the
+    parser, which strips ``CR LF`` either way.
+    """
+    return [frame.rstrip(b"\r") for frame in capture.split(b"\n") if frame.strip(b" \r")]
 
 
 def load_arrow_script(text: str) -> dict[bytes, bytes]:

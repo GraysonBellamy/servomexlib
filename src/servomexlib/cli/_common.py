@@ -25,6 +25,7 @@ if TYPE_CHECKING:
     from collections.abc import AsyncGenerator, Awaitable, Callable, Sequence
 
     from servomexlib.devices.analyzer import Analyzer
+    from servomexlib.testing import FakeTransport
 
 __all__ = [
     "add_open_args",
@@ -139,6 +140,22 @@ def add_open_args(parser: argparse.ArgumentParser) -> None:
     )
 
 
+#: Cadence of the fixture broadcaster — fast enough to keep --count tests snappy,
+#: slow enough to bound the inbound buffer and give jitter a measurable gap.
+_FIXTURE_BROADCAST_INTERVAL = 0.005
+
+
+async def _replay_fixture(fake: FakeTransport, frames: Sequence[bytes]) -> None:
+    """Feed ``frames`` into ``fake`` on a loop to emulate a live broadcaster.
+
+    Runs until cancelled (when the :func:`open_analyzer` context exits). A capture
+    is a finite slice; looping it lets ``--count``-style consumers read as many
+    frames as they ask for without the stream ever drying up.
+    """
+    while True:
+        await fake.emit(frames, interval=_FIXTURE_BROADCAST_INTERVAL)
+
+
 @asynccontextmanager
 async def open_analyzer(args: argparse.Namespace) -> AsyncGenerator[Analyzer]:
     """Open an :class:`Analyzer` from parsed ``args`` as an async context manager.
@@ -159,10 +176,16 @@ async def open_analyzer(args: argparse.Namespace) -> AsyncGenerator[Analyzer]:
         capture = Path(args.fixture).read_bytes()
         frames = [frame + b"\r\n" for frame in split_continuous_frames(capture)]
         fake = FakeTransport()
-        async with await open_continuous(fake) as anz:
-            for frame in frames:
-                fake.feed(frame)
-            yield anz
+        async with anyio.create_task_group() as tg, await open_continuous(fake) as anz:
+            # A capture holds a finite slice of frames, but consumers (read's
+            # identify+poll, stream/tap/jitter's --count) expect a live broadcaster.
+            # Replay the slice on a loop in the background so the stream never dries
+            # up; the task is cancelled when the caller exits the context.
+            tg.start_soon(_replay_fixture, fake, frames)
+            try:
+                yield anz
+            finally:
+                tg.cancel_scope.cancel()
         return
 
     if args.port is None:

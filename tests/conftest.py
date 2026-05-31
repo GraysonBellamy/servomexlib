@@ -52,7 +52,9 @@ def continuous_capture() -> bytes:
 @pytest.fixture
 def continuous_frames(continuous_capture: bytes) -> list[bytes]:
     """The capture split into individual frame payloads (no trailing CRLF)."""
-    return [frame for frame in continuous_capture.split(b"\r\n") if frame.strip(b" ")]
+    from servomexlib.testing import split_continuous_frames
+
+    return split_continuous_frames(continuous_capture)
 
 
 _UVLOOP_UNAVAILABLE = sys.platform == "win32" or find_spec("uvloop") is None
