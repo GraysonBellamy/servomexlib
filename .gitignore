@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Generated version file (hatch-vcs)
+src/servomexlib/_version.py
+
+# Virtual environments
+.venv/
+venv/
+
+# uv
+.uv-cache/
+
+# Test / type / lint caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.cache/
+
+# Docs build output (zensical)
+site/
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Claude / agent local state
+.claude/
+.codex/
+memory/
+
+# act (local GitHub Actions)
+.secrets
+.act-event*.json
+
+# Vendor manuals — large & proprietary, kept locally for reference only (see docs/design.md §11)
+docs/manuals/
+
+# Local hardware captures are versioned as fixtures under tests/fixtures/captures/,
+# but ad-hoc raw captures in the repo root are not:
+/capture_*.bin
+
+# Ad-hoc bench probe scripts + their output (local research tooling, not shipped)
+/scripts/probe_*.py
+/probe_out*/
