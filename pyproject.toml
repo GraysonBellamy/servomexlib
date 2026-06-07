@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.29.0", "hatch-vcs>=0.5.0"]
+requires = ["hatchling>=1.30.1", "hatch-vcs>=0.5.0"]
 build-backend = "hatchling.build"
 
 # ---------------------------------------------------------------------------
@@ -47,8 +47,8 @@ modbus-ascii = ["anymodbus>=0.2,<0.3"]
 postgres = ["asyncpg>=0.30"]
 parquet = ["pyarrow>=16"]
 docs = [
-    "zensical>=0.0.33",
-    "mkdocstrings-python>=1.12",
+    "zensical>=0.0.44",
+    "mkdocstrings-python>=2.0.4",
 ]
 
 [project.scripts]
@@ -104,11 +104,11 @@ dev = [
     "pre-commit>=4.0",
 ]
 lint = [
-    "ruff>=0.15.11",
+    "ruff>=0.15.16",
 ]
 type = [
     "mypy>=1.20",
-    "pyright>=1.1.390",
+    "pyright>=1.1.410",
 ]
 test = [
     "pytest>=8.3",
@@ -117,15 +117,15 @@ test = [
     # tasks that break cancel scopes / task groups). See AnyIO testing docs.
     "pytest-cov>=6.0",
     "coverage[toml]>=7.14.1",
-    "hypothesis>=6.112",
+    "hypothesis>=6.155.2",
     "trio>=0.27",       # used as a secondary AnyIO backend in cross-backend tests
     "uvloop>=0.22.1; platform_system == 'Linux' or platform_system == 'Darwin'",
     # Modbus engine — needed to exercise the Modbus path + MockSlave fake in CI.
     "anymodbus>=0.2,<0.3",
 ]
 docs = [
-    "zensical>=0.0.33",
-    "mkdocstrings-python>=1.12",
+    "zensical>=0.0.44",
+    "mkdocstrings-python>=2.0.4",
 ]
 
 # ---------------------------------------------------------------------------
