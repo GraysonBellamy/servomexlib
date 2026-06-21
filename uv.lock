@@ -933,7 +933,7 @@ provides-extras = ["docs", "modbus", "modbus-ascii", "parquet", "postgres"]
 [package.metadata.requires-dev]
 dev = [
     { name = "anymodbus", specifier = ">=0.2,<0.3" },
-    { name = "coverage", extras = ["toml"], specifier = ">=7.14.1" },
+    { name = "coverage", extras = ["toml"], specifier = ">=7.14.2" },
     { name = "hypothesis", specifier = ">=6.155.2" },
     { name = "mkdocstrings-python", specifier = ">=2.0.4" },
     { name = "mypy", specifier = ">=1.20" },
@@ -953,7 +953,7 @@ docs = [
 lint = [{ name = "ruff", specifier = ">=0.15.17" }]
 test = [
     { name = "anymodbus", specifier = ">=0.2,<0.3" },
-    { name = "coverage", extras = ["toml"], specifier = ">=7.14.1" },
+    { name = "coverage", extras = ["toml"], specifier = ">=7.14.2" },
     { name = "hypothesis", specifier = ">=6.155.2" },
     { name = "pytest", specifier = ">=9.1.0" },
     { name = "pytest-cov", specifier = ">=6.0" },
