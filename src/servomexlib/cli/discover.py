@@ -92,11 +92,11 @@ async def _probe_fixture(fixture: str, timeout: float) -> DiscoveryResult:
             await anyio.sleep(0.05)
 
     async with anyio.create_task_group() as tg:
-        tg.start_soon(_emit)
+        _ = tg.start_soon(_emit)
         try:
             return await discover_port(fake, timeout=timeout)
         finally:
-            tg.cancel_scope.cancel()
+            tg.cancel()
     # Unreachable: the task group propagates the result/exception above. Spelled
     # out so the checkers see a return/raise on every path past the task group.
     raise AssertionError("unreachable")  # pragma: no cover

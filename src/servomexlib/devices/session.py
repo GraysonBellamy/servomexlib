@@ -19,7 +19,7 @@ loop is present.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
 import anyio
 
@@ -32,7 +32,7 @@ from servomexlib.errors import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable
+    from collections.abc import Callable, Coroutine
     from types import TracebackType
     from typing import Self
 
@@ -80,10 +80,10 @@ class Session:
     async def __aenter__(self) -> Self:
         run = getattr(self._client, "run", None)
         if callable(run):  # continuous client: host the background receive loop
-            background = cast("Callable[[], Awaitable[None]]", run)
+            background = cast("Callable[[], Coroutine[Any, Any, None]]", run)
             task_group = anyio.create_task_group()
             await task_group.__aenter__()
-            task_group.start_soon(background)
+            _ = task_group.start_soon(background)
             self._task_group = task_group
         return self
 
@@ -98,7 +98,7 @@ class Session:
     async def aclose(self) -> None:
         """Cancel the receive loop (if any), then close the client/transport."""
         if self._task_group is not None:
-            self._task_group.cancel_scope.cancel()
+            self._task_group.cancel()
             await self._task_group.__aexit__(None, None, None)
             self._task_group = None
         await self._client.aclose()

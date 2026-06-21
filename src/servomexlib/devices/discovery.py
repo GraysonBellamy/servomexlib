@@ -10,13 +10,13 @@ resolved :class:`ProtocolKind`.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from servomexlib.errors import ServomexError
 from servomexlib.protocol.base import ProtocolKind
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable, Sequence
+    from collections.abc import Callable, Coroutine, Sequence
 
     from servomexlib.devices.models import DeviceInfo
     from servomexlib.transport.base import SerialSettings, Transport
@@ -124,11 +124,11 @@ async def _identify(
     # Continuous: spin the receive loop just long enough to catch the first frame.
     import anyio
 
-    background = cast("Callable[[], Awaitable[None]]", run)
+    background = cast("Callable[[], Coroutine[Any, Any, None]]", run)
     async with anyio.create_task_group() as tg:
-        tg.start_soon(background)
+        _ = tg.start_soon(background)
         info = await client.identify(timeout=timeout)
-        tg.cancel_scope.cancel()
+        tg.cancel()
         return info
     raise AssertionError("unreachable")  # pragma: no cover - the async with always returns/raises
 

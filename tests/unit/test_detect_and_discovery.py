@@ -54,12 +54,12 @@ async def test_auto_resolves_continuous(continuous_capture: bytes) -> None:
             await anyio.sleep(0.01)
 
     async with anyio.create_task_group() as tg:
-        tg.start_soon(feed_continuously)
+        _ = tg.start_soon(feed_continuously)
         kind = await detect_protocol(
             fake, address=1, probe_timeout=0.2, probe_tries=1, listen_timeout=2.0
         )
         assert kind is ProtocolKind.CONTINUOUS_ASCII
-        tg.cancel_scope.cancel()
+        tg.cancel()
 
 
 async def test_auto_silent_transport_raises() -> None:

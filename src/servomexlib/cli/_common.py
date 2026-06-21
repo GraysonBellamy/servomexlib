@@ -181,11 +181,11 @@ async def open_analyzer(args: argparse.Namespace) -> AsyncGenerator[Analyzer]:
             # identify+poll, stream/tap/jitter's --count) expect a live broadcaster.
             # Replay the slice on a loop in the background so the stream never dries
             # up; the task is cancelled when the caller exits the context.
-            tg.start_soon(_replay_fixture, fake, frames)
+            _ = tg.start_soon(_replay_fixture, fake, frames)
             try:
                 yield anz
             finally:
-                tg.cancel_scope.cancel()
+                tg.cancel()
         return
 
     if args.port is None:

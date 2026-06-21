@@ -360,11 +360,11 @@ async def mock_modbus_transport(
     load_4100_banks(slave, channels)
 
     async with anyio.create_task_group() as tg:
-        tg.start_soon(slave.serve, slave_end)
+        _ = tg.start_soon(slave.serve, slave_end)
         try:
             yield transport, slave
         finally:
-            tg.cancel_scope.cancel()
+            tg.cancel()
             with anyio.CancelScope(shield=True):
                 await transport.aclose()
                 await slave_end.aclose()

@@ -219,11 +219,11 @@ async def record(
                     reconnect_factory=reconnect_factory,
                 )
 
-            tg.start_soon(_producer_entrypoint)
+            _ = tg.start_soon(_producer_entrypoint)
             try:
                 yield Recording(stream=receive_stream, summary=summary, rate_hz=rate_hz)
             finally:
-                tg.cancel_scope.cancel()
+                tg.cancel()
     except BaseExceptionGroup as eg:
         # A lone producer failure (e.g. ServomexConnectionError without
         # auto_reconnect) surfaces as a single-member group from the task group;

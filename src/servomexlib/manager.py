@@ -311,7 +311,7 @@ class ServomexManager:
 
         async with anyio.create_task_group() as tg:
             for port_key, members in groups.items():
-                tg.start_soon(_run_group, port_key, members)
+                _ = tg.start_soon(_run_group, port_key, members)
         return all_samples
 
     async def poll(
@@ -341,7 +341,7 @@ class ServomexManager:
 
         async with anyio.create_task_group() as tg:
             for port_key, members in groups.items():
-                tg.start_soon(_run_group, port_key, members)
+                _ = tg.start_soon(_run_group, port_key, members)
         return results
 
     async def execute_each[T](
@@ -371,7 +371,7 @@ class ServomexManager:
 
         async with anyio.create_task_group() as tg:
             for port_key, members in groups.items():
-                tg.start_soon(_run_group, port_key, members)
+                _ = tg.start_soon(_run_group, port_key, members)
 
         if self._error_policy is ErrorPolicy.RAISE and errors:
             raise ExceptionGroup("manager.execute_each: one or more analysers failed", errors)

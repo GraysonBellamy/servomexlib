@@ -17,8 +17,9 @@ from typing import TYPE_CHECKING, Self
 import anyio
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable
+    from collections.abc import Callable, Coroutine
     from types import TracebackType
+    from typing import Any
 
     from anyio.abc import TaskGroup
     from anyio.streams.memory import MemoryObjectReceiveStream
@@ -56,7 +57,7 @@ class StreamingSession:
         *,
         mode: StreamMode,
         on_close: Callable[[], None] | None = None,
-        producer: Callable[[], Awaitable[None]] | None = None,
+        producer: Callable[[], Coroutine[Any, Any, None]] | None = None,
     ) -> None:
         self._receiver = receiver
         self._mode = mode
@@ -73,7 +74,7 @@ class StreamingSession:
         if self._producer is not None:
             task_group = anyio.create_task_group()
             await task_group.__aenter__()
-            task_group.start_soon(self._producer)
+            _ = task_group.start_soon(self._producer)
             self._task_group = task_group
         return self
 
@@ -88,7 +89,7 @@ class StreamingSession:
     async def aclose(self) -> None:
         """Stop the owned producer (if any), unsubscribe, and close the stream."""
         if self._task_group is not None:
-            self._task_group.cancel_scope.cancel()
+            self._task_group.cancel()
             await self._task_group.__aexit__(None, None, None)
             self._task_group = None
         if self._on_close is not None:
