@@ -1,7 +1,7 @@
 [project]
 site_name = "servomexlib"
 site_description = "Async Python driver for Servomex SERVOPRO 4000-series gas analysers."
-site_url = "https://graysonbellamy.github.io/servomexlib/"
+site_url = "https://servomexlib.graysonbellamy.dev/"
 repo_url = "https://github.com/GraysonBellamy/servomexlib"
 repo_name = "GraysonBellamy/servomexlib"
 edit_uri = "edit/main/docs/"

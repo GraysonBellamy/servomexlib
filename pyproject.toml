@@ -62,7 +62,7 @@ servomex-diag = "servomexlib.cli.diagnostics:main"
 [project.urls]
 Homepage = "https://github.com/GraysonBellamy/servomexlib"
 Repository = "https://github.com/GraysonBellamy/servomexlib"
-Documentation = "https://graysonbellamy.github.io/servomexlib/"
+Documentation = "https://servomexlib.graysonbellamy.dev/"
 Issues = "https://github.com/GraysonBellamy/servomexlib/issues"
 Changelog = "https://github.com/GraysonBellamy/servomexlib/blob/main/CHANGELOG.md"
 
