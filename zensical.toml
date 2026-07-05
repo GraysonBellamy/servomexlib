@@ -82,6 +82,19 @@ show_root_heading = true
 merge_init_into_class = true
 separate_signature = true
 
+[[project.extra.social]]
+icon = "fontawesome/solid/house"
+link = "https://graysonbellamy.dev"
+name = "graysonbellamy.dev"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/GraysonBellamy/servomexlib"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/python"
+link = "https://pypi.org/project/servomexlib/"
+
 [project.markdown_extensions.admonition]
 
 [project.markdown_extensions.attr_list]
