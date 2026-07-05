@@ -116,8 +116,8 @@ test = [
     # (the two auto-modes disagree, and pytest-asyncio wraps fixtures in fresh
     # tasks that break cancel scopes / task groups). See AnyIO testing docs.
     "pytest-cov>=6.0",
-    "coverage[toml]>=7.14.3",
-    "hypothesis>=6.155.2",
+    "coverage[toml]>=7.15.0",
+    "hypothesis>=6.156.1",
     "trio>=0.27",       # used as a secondary AnyIO backend in cross-backend tests
     "uvloop>=0.22.1; platform_system == 'Linux' or platform_system == 'Darwin'",
     # Modbus engine — needed to exercise the Modbus path + MockSlave fake in CI.
