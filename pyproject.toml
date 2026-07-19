@@ -47,7 +47,7 @@ modbus-ascii = ["anymodbus>=0.2,<0.3"]
 postgres = ["asyncpg>=0.30"]
 parquet = ["pyarrow>=25.0.0"]
 docs = [
-    "zensical>=0.0.50",
+    "zensical>=0.0.51",
     "mkdocstrings-python>=2.0.4",
 ]
 
@@ -104,10 +104,10 @@ dev = [
     "pre-commit>=4.0",
 ]
 lint = [
-    "ruff>=0.15.21",
+    "ruff>=0.15.22",
 ]
 type = [
-    "mypy>=2.2.0",
+    "mypy>=2.3.0",
     "pyright>=1.1.411",
 ]
 test = [
@@ -116,15 +116,15 @@ test = [
     # (the two auto-modes disagree, and pytest-asyncio wraps fixtures in fresh
     # tasks that break cancel scopes / task groups). See AnyIO testing docs.
     "pytest-cov>=6.0",
-    "coverage[toml]>=7.15.0",
-    "hypothesis>=6.156.6",
+    "coverage[toml]>=7.15.2",
+    "hypothesis>=6.157.0",
     "trio>=0.27",       # used as a secondary AnyIO backend in cross-backend tests
     "uvloop>=0.22.1; platform_system == 'Linux' or platform_system == 'Darwin'",
     # Modbus engine — needed to exercise the Modbus path + MockSlave fake in CI.
     "anymodbus>=0.2,<0.3",
 ]
 docs = [
-    "zensical>=0.0.50",
+    "zensical>=0.0.51",
     "mkdocstrings-python>=2.0.4",
 ]
 
