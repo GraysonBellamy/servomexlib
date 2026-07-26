@@ -65,12 +65,12 @@ def record_to_sink(
             _run,
             source,
             sink,
-            rate_hz,
-            duration,
-            names,
-            timeout,
-            batch_size,
-            flush_interval,
+            rate_hz=rate_hz,
+            duration=duration,
+            names=names,
+            timeout=timeout,
+            batch_size=batch_size,
+            flush_interval=flush_interval,
         )
     finally:
         if owns_portal:
@@ -80,6 +80,7 @@ def record_to_sink(
 async def _run(
     source: PollSource,
     sink: SampleSink,
+    *,
     rate_hz: float,
     duration: float,
     names: Sequence[str] | None,

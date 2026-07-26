@@ -206,15 +206,15 @@ async def record(
             async def _producer_entrypoint() -> None:
                 await _run_producer(
                     source,
-                    send_stream,
-                    drop_rx,
-                    names,
-                    timeout,
-                    period,
-                    total_ticks,
-                    overflow,
-                    summary,
-                    tick_durations_ms,
+                    send_stream=send_stream,
+                    drop_rx=drop_rx,
+                    names=names,
+                    timeout=timeout,
+                    period=period,
+                    total_ticks=total_ticks,
+                    overflow=overflow,
+                    summary=summary,
+                    tick_durations_ms=tick_durations_ms,
                     auto_reconnect=auto_reconnect,
                     reconnect_factory=reconnect_factory,
                 )
@@ -289,6 +289,7 @@ def _tick_percentiles(values: list[float]) -> tuple[float, float]:
 
 async def _run_producer(
     source: PollSource,
+    *,
     send_stream: MemoryObjectSendStream[Sequence[Sample]],
     drop_rx: MemoryObjectReceiveStream[Sequence[Sample]],
     names: Sequence[str] | None,
@@ -298,7 +299,6 @@ async def _run_producer(
     overflow: OverflowPolicy,
     summary: AcquisitionSummary,
     tick_durations_ms: list[float],
-    *,
     auto_reconnect: bool = False,
     reconnect_factory: Callable[[], Awaitable[PollSource]] | None = None,
 ) -> None:
