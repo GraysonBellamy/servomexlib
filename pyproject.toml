@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.31.0", "hatch-vcs>=0.5.0"]
+requires = ["hatchling>=1.32.0", "hatch-vcs>=0.5.0"]
 build-backend = "hatchling.build"
 
 # ---------------------------------------------------------------------------
@@ -101,10 +101,10 @@ dev = [
     { include-group = "type" },
     { include-group = "test" },
     { include-group = "docs" },
-    "pre-commit>=4.0",
+    "pre-commit>=4.6.2",
 ]
 lint = [
-    "ruff>=0.16.1",
+    "ruff>=0.16.2",
 ]
 type = [
     "mypy>=2.3.0",
@@ -116,9 +116,9 @@ test = [
     # (the two auto-modes disagree, and pytest-asyncio wraps fixtures in fresh
     # tasks that break cancel scopes / task groups). See AnyIO testing docs.
     "pytest-cov>=6.0",
-    "coverage[toml]>=7.15.3",
-    "hypothesis>=6.165.2",
-    "trio>=0.27",       # used as a secondary AnyIO backend in cross-backend tests
+    "coverage[toml]>=7.15.4",
+    "hypothesis>=6.165.5",
+    "trio>=0.34.0",       # used as a secondary AnyIO backend in cross-backend tests
     "uvloop>=0.22.1; platform_system == 'Linux' or platform_system == 'Darwin'",
     # Modbus engine — needed to exercise the Modbus path + MockSlave fake in CI.
     "anymodbus>=0.2,<0.3",
