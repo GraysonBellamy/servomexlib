@@ -45,7 +45,7 @@ dependencies = [
 modbus = ["anymodbus>=0.1.1"]
 modbus-ascii = ["anymodbus>=0.2,<0.3"]
 postgres = ["asyncpg>=0.30"]
-parquet = ["pyarrow>=25.0.0"]
+parquet = ["pyarrow>=25.0.1"]
 docs = [
     "zensical>=0.0.53",
     "mkdocstrings-python>=2.0.4",
