@@ -42,8 +42,8 @@ dependencies = [
 # Modbus is staged so continuous-only users stay lean (design §5.1, §11).
 #   modbus       → RTU + continuous core (interim read_input_registers/decode_* path)
 #   modbus-ascii → AUTO ladder, ASCII/LRC framing, FC08 diagnostics, typed FC04 helpers
-modbus = ["anymodbus>=0.1.1"]
-modbus-ascii = ["anymodbus>=0.2,<0.3"]
+modbus = ["anymodbus>=0.2,<0.4"]
+modbus-ascii = ["anymodbus>=0.2,<0.4"]
 postgres = ["asyncpg>=0.30"]
 parquet = ["pyarrow>=25.0.1"]
 docs = [
@@ -121,7 +121,7 @@ test = [
     "trio>=0.34.0",       # used as a secondary AnyIO backend in cross-backend tests
     "uvloop>=0.22.1; platform_system == 'Linux' or platform_system == 'Darwin'",
     # Modbus engine — needed to exercise the Modbus path + MockSlave fake in CI.
-    "anymodbus>=0.2,<0.3",
+    "anymodbus>=0.2,<0.4",
 ]
 docs = [
     "zensical>=0.0.53",
