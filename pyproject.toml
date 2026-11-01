@@ -111,7 +111,7 @@ type = [
     "pyright>=1.1.411",
 ]
 test = [
-    "pytest>=9.1.0",
+    "pytest>=9.2.0",
     # AnyIO ships its own pytest plugin; pytest-asyncio would conflict with it
     # (the two auto-modes disagree, and pytest-asyncio wraps fixtures in fresh
     # tasks that break cancel scopes / task groups). See AnyIO testing docs.
